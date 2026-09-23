@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { IntroPage } from "#/components/_DELETE_ME_intro-page/intro-page.tsx";
+import { IntroPage } from "#/components/intro-page";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
