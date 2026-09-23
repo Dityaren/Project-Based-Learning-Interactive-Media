@@ -5,7 +5,8 @@
     "allowImportingTsExtensions": true,
     "paths": {
       // for shadcn CLI
-      "@repo/ui/*": ["../../packages/ui/*"]
+      "@repo/ui/*": ["../../packages/ui/*"],
+      "#/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
