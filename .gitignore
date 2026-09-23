@@ -39,3 +39,6 @@ worker-configuration.d.ts
 devenv.*
 .envrc
 .devenv/
+
+# db migrations
+packages/db/migrations/
