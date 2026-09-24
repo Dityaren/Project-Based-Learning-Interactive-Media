@@ -28,6 +28,17 @@ export const auth = betterAuth({
     },
   },
 
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: true,
+        defaultValue: "student",
+        input: false,
+      },
+    },
+  },
+
   // https://better-auth.com/docs/concepts/oauth
   socialProviders: {
     github: {
