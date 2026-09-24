@@ -1,6 +1,8 @@
 import { Button } from "@repo/ui/components/button";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@repo/ui/components/sidebar";
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 
+import { AppSidebar } from "#/components/app-sidebar.tsx";
 import { SignOutButton } from "#/components/sign-out-button.tsx";
 import { ThemeToggle } from "#/components/theme-toggle.tsx";
 
@@ -10,31 +12,27 @@ export const Route = createFileRoute("/_auth/app")({
 
 function AppLayout() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-2 px-2">
-      <div className="flex w-full max-w-3xl justify-between">
-        <div className="flex items-center gap-1">
-          <Button render={<Link to="/" />} size="sm" nativeButton={false}>
-            back to home
-          </Button>
-          <span className="rounded-md border bg-card p-1 font-mono text-xs text-card-foreground">
-            _auth/app/route.tsx
-          </span>
-        </div>
-        <ThemeToggle />
-      </div>
-      <div className="w-full max-w-3xl rounded-md border p-2">
-        <Outlet />
-      </div>
+    <SidebarProvider>
+      <AppSidebar />
 
-      <div className="flex w-full max-w-3xl flex-wrap justify-between gap-2 text-sm">
-        <div className="flex flex-col gap-0.5">
-          what's next? maybe a sidebar?
-          <span className="rounded-md border bg-card px-2 py-1 font-mono text-xs text-card-foreground">
-            vpr ui add sidebar
-          </span>
-        </div>
-        <SignOutButton />
-      </div>
-    </div>
+      <SidebarInset>
+        <header className="flex h-14 items-center gap-2 border-b px-4">
+          <SidebarTrigger />
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
+        </header>
+
+        <main className="flex flex-1 flex-col p-4">
+          <div className="w-full flex-1 rounded-md border p-2">
+            <Outlet />
+          </div>
+        </main>
+
+        <footer className="flex items-center justify-center p-3">
+          Copyright (c) 2026 Dityaren. All Rights Reserved.
+        </footer>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
