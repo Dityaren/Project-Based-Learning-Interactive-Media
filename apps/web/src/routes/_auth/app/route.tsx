@@ -1,4 +1,3 @@
-import { useRequiredAuthSuspense } from "@repo/auth/tanstack/hooks";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@repo/ui/components/sidebar";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
@@ -9,16 +8,10 @@ export const Route = createFileRoute("/_auth/app")({
   component: Dashboard,
 });
 
-function Sidebar() {
-  const { user } = useRequiredAuthSuspense();
-
-  return <AppSidebar userData={user} />;
-}
-
 function Dashboard() {
   return (
     <SidebarProvider>
-      <Sidebar />
+      <AppSidebar />
 
       <SidebarInset>
         <header className="flex h-14 items-center gap-2 border-b px-4">
