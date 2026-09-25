@@ -170,7 +170,11 @@ export function AppSidebar({ userData: user }: { userData: User }) {
               className="h-12 rounded-lg"
             >
               <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                {getInitials(user?.name)}
+                {user.image ? (
+                  <img src={user.image} className="rounded-full object-cover" />
+                ) : (
+                  getInitials(user.name)
+                )}
               </div>
 
               <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
