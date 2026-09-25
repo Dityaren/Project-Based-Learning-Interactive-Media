@@ -15,7 +15,7 @@ export function SidebarSignOutButton() {
             onResponse: async () => {
               // manually set to null to avoid unnecessary refetching
               queryClient.setQueryData(authQueryOptions().queryKey, null);
-              await router.invalidate();
+              await router.navigate({ to: "/login" });
             },
           },
         });
