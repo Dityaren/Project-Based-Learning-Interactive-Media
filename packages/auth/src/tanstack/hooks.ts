@@ -20,13 +20,3 @@ export function useAuthSuspense() {
   const { data: user } = useSuspenseQuery(authQueryOptions());
   return { user };
 }
-
-export function useRequiredAuthSuspense() {
-  const { data: user } = useSuspenseQuery(authQueryOptions());
-
-  if (!user) {
-    throw new Error("Authenticated user is required");
-  }
-
-  return { user };
-}
