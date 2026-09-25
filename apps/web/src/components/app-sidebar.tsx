@@ -1,4 +1,5 @@
 import { authClient } from "@repo/auth/auth-client";
+import { useAuthSuspense } from "@repo/auth/tanstack/hooks";
 import {
   Sidebar,
   SidebarContent,
@@ -49,7 +50,8 @@ const account = [
   },
 ];
 
-export function AppSidebar({ userData: user }: { userData: User }) {
+export function AppSidebar() {
+  const { user } = useAuthSuspense();
   const navigate = useNavigate();
 
   const pathname = useRouterState({
@@ -170,10 +172,10 @@ export function AppSidebar({ userData: user }: { userData: User }) {
               className="h-12 rounded-lg"
             >
               <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                {user.image ? (
-                  <img src={user.image} className="rounded-full object-cover" />
+                {user?.image ? (
+                  <img src={user?.image} className="rounded-full object-cover" />
                 ) : (
-                  getInitials(user.name)
+                  getInitials(user?.name)
                 )}
               </div>
 
