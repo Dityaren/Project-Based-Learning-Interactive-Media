@@ -1,19 +1,24 @@
-import { Button } from "@repo/ui/components/button";
+import { useRequiredAuthSuspense } from "@repo/auth/tanstack/hooks";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@repo/ui/components/sidebar";
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 import { AppSidebar } from "#/components/app-sidebar.tsx";
-import { SignOutButton } from "#/components/sign-out-button.tsx";
 import { ThemeToggle } from "#/components/theme-toggle.tsx";
 
 export const Route = createFileRoute("/_auth/app")({
-  component: AppLayout,
+  component: Dashboard,
 });
 
-function AppLayout() {
+function Sidebar() {
+  const { user } = useRequiredAuthSuspense();
+
+  return <AppSidebar userData={user} />;
+}
+
+function Dashboard() {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <Sidebar />
 
       <SidebarInset>
         <header className="flex h-14 items-center gap-2 border-b px-4">
