@@ -1,4 +1,4 @@
-import { useAuthSuspense } from "@repo/auth/tanstack/hooks";
+import { authClient } from "@repo/auth/auth-client";
 import {
   Sidebar,
   SidebarContent,
@@ -13,9 +13,10 @@ import {
   SidebarRail,
 } from "@repo/ui/components/sidebar";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { BookOpen, FolderKanban, Gauge, LogOut, Settings, User } from "lucide-react";
+import { BookOpen, FolderKanban, Gauge, Settings, User } from "lucide-react";
 
 import { SidebarSignOutButton } from "#/components/sidebar-sign-out-button";
+type User = typeof authClient.$Infer.Session.user;
 
 const navigation = [
   {
@@ -48,8 +49,7 @@ const account = [
   },
 ];
 
-export function AppSidebar() {
-  const { user } = useAuthSuspense();
+export function AppSidebar({ userData: user }: { userData: User }) {
   const navigate = useNavigate();
 
   const pathname = useRouterState({
