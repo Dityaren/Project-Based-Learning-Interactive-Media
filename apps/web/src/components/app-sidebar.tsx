@@ -17,36 +17,49 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { BookOpen, FolderKanban, Gauge, Settings, User } from "lucide-react";
 
 import { SidebarSignOutButton } from "#/components/sidebar-sign-out-button";
+
 type User = typeof authClient.$Infer.Session.user;
 
-const navigation = [
-  {
-    title: "Dashboard",
-    url: "/app",
-    icon: Gauge,
-  },
-  {
-    title: "Projects",
-    url: "/app/projects",
-    icon: FolderKanban,
-  },
-  {
-    title: "Learn",
-    url: "/app/learn",
-    icon: BookOpen,
-  },
-];
+type Navigation = {
+  group: string;
+  data: { title: string; url: string; icon: React.ReactNode }[];
+};
 
-const account = [
+const navigation: Navigation[] = [
   {
-    title: "Profile",
-    url: "/app/profile",
-    icon: User,
+    group: "app",
+    data: [
+      {
+        title: "Dashboard",
+        url: "/app",
+        icon: <Gauge className="size-4" />,
+      },
+      {
+        title: "Projects",
+        url: "/app/projects",
+        icon: <FolderKanban className="size-4" />,
+      },
+      {
+        title: "Learn",
+        url: "/app/learn",
+        icon: <BookOpen className="size-4" />,
+      },
+    ],
   },
   {
-    title: "Settings",
-    url: "/app/settings",
-    icon: Settings,
+    group: "account",
+    data: [
+      {
+        title: "Profile",
+        url: "/app/profile",
+        icon: <User className="size-4" />,
+      },
+      {
+        title: "Settings",
+        url: "/app/settings",
+        icon: <Settings className="size-4" />,
+      },
+    ],
   },
 ];
 
@@ -91,75 +104,42 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="px-2">
-        <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">
-            Workspace
-          </SidebarGroupLabel>
+        {navigation.map((group) => (
+          <SidebarGroup key={group.group} className="p-0">
+            <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">
+              {group.group}
+            </SidebarGroupLabel>
 
-          <SidebarGroupContent>
-            <SidebarMenu className="gap-1">
-              {navigation.map((item) => {
-                const active = isActive(item.url);
+            <SidebarGroupContent>
+              <SidebarMenu className="gap-1">
+                {group.data.map((item) => {
+                  const active = isActive(item.url);
 
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      tooltip={item.title}
-                      isActive={active}
-                      onClick={() => navigate({ to: item.url })}
-                      className="relative h-9 rounded-lg"
-                    >
-                      <span
-                        className={[
-                          "absolute left-0 top-1/2 z-10 h-5 w-0.5 -translate-y-1/2 rounded-full bg-black transition-transform duration-200 dark:bg-white",
-                          active ? "scale-y-100" : "scale-y-0",
-                        ].join(" ")}
-                      />
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        tooltip={item.title}
+                        isActive={active}
+                        onClick={() => navigate({ to: item.url })}
+                        className="relative h-9 rounded-lg"
+                      >
+                        <span
+                          className={[
+                            "absolute left-0 top-1/2 z-10 h-5 w-0.5 -translate-y-1/2 rounded-full bg-black transition-transform duration-200 dark:bg-white",
+                            active ? "scale-y-100" : "scale-y-0",
+                          ].join(" ")}
+                        />
 
-                      <item.icon className="size-4" />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup className="mt-4 p-0">
-          <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">
-            Account
-          </SidebarGroupLabel>
-
-          <SidebarGroupContent>
-            <SidebarMenu className="gap-1">
-              {account.map((item) => {
-                const active = isActive(item.url);
-
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      tooltip={item.title}
-                      isActive={active}
-                      onClick={() => navigate({ to: item.url })}
-                      className="relative h-9 rounded-lg"
-                    >
-                      <span
-                        className={[
-                          "absolute left-0 top-1/2 z-10 h-5 w-0.5 -translate-y-1/2 rounded-full bg-black transition-transform duration-200 dark:bg-white",
-                          active ? "scale-y-100" : "scale-y-0",
-                        ].join(" ")}
-                      />
-
-                      <item.icon className="size-4" />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
 
       <SidebarFooter className="p-2">
