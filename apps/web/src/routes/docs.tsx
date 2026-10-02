@@ -440,7 +440,7 @@ import {
 // Create: the author comes from the session, never from the client
 export const $createProject = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((d: { name: string; description?: string }) => d)
+  .validator((d: { name: string; description?: string }) => d)
   .handler(async ({ context, data }) => {
     const [project] = await db
       .insert(projects)
