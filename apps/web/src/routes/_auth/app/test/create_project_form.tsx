@@ -1,7 +1,3 @@
-// npx shadcn@latest add button field sonner input textarea
-
-"use client";
-
 import { Button } from "@repo/ui/components/button";
 import {
   Field,
