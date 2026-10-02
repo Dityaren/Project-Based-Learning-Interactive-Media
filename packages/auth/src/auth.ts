@@ -1,8 +1,10 @@
 import "@tanstack/react-start/server-only";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
+import { ac, roles } from "@repo/auth/permissions";
 import { db } from "@repo/db";
 import * as schema from "@repo/db/schema";
 import { betterAuth } from "better-auth/minimal";
+import { admin } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { ENV } from "varlock/env";
 
@@ -18,7 +20,10 @@ export const auth = betterAuth({
   }),
 
   // https://better-auth.com/docs/integrations/tanstack#usage-tips
-  plugins: [tanstackStartCookies()],
+  plugins: [
+    admin({ ac, roles, defaultRole: "student", adminRoles: ["admin", "master"] }),
+    tanstackStartCookies(), // keep this last
+  ],
 
   // https://better-auth.com/docs/concepts/session-management#session-caching
   session: {
