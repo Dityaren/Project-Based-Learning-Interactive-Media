@@ -1,11 +1,12 @@
+import { useAuthSuspense } from "@repo/auth/tanstack/hooks";
 import { createFileRoute } from "@tanstack/react-router";
-
-import AppTestPage from "#/components/app-test-page";
+import { log } from "evlog";
 
 export const Route = createFileRoute("/_auth/app/test/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <AppTestPage />;
+  const user = useAuthSuspense();
+  return <>testpage</>;
 }
