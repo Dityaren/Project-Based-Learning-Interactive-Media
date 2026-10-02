@@ -14,7 +14,7 @@ import {
   SidebarRail,
 } from "@repo/ui/components/sidebar";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { BookOpen, FolderKanban, Gauge, Settings, User } from "lucide-react";
+import { BookOpen, FolderKanban, Gauge, Settings, User, BadgeInfo } from "lucide-react";
 
 import { SidebarSignOutButton } from "#/components/sidebar-sign-out-button";
 
@@ -58,6 +58,16 @@ const navigation: Navigation[] = [
         title: "Settings",
         url: "/app/settings",
         icon: <Settings className="size-4" />,
+      },
+    ],
+  },
+  {
+    group: "dev",
+    data: [
+      {
+        title: "test",
+        url: "/app/test",
+        icon: <BadgeInfo className="size-4" />,
       },
     ],
   },
