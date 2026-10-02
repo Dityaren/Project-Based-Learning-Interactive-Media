@@ -163,7 +163,11 @@ export function AppSidebar() {
             >
               <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
                 {user?.image ? (
-                  <img src={user?.image} className="rounded-full object-cover" />
+                  <img
+                    src={user?.image}
+                    referrerPolicy="no-referrer"
+                    className="rounded-full object-cover"
+                  />
                 ) : (
                   getInitials(user?.name)
                 )}
