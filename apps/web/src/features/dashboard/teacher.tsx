@@ -1,8 +1,7 @@
-// apps/web/src/features/dashboard/teacher.tsx
 import { AlarmClockOff, ClipboardCheck, FolderKanban, School } from "lucide-react";
 
+import { Grid, Panel, Pill, ProgressBar, Row, StatCard } from "../ui";
 import { teacher } from "./mock";
-import { Grid, Panel, Pill, ProgressBar, Row, StatCard } from "./ui";
 
 export function TeacherDashboard() {
   const t = teacher;

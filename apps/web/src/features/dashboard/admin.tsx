@@ -1,4 +1,3 @@
-// apps/web/src/features/dashboard/admin.tsx
 import { Link } from "@tanstack/react-router";
 import {
   BookUser,
@@ -10,8 +9,8 @@ import {
   UserPlus,
 } from "lucide-react";
 
+import { Grid, Panel, Row, StatCard } from "../ui";
 import { admin } from "./mock";
-import { Grid, Panel, Row, StatCard } from "./ui";
 
 export function AdminDashboard({ isMaster }: { isMaster: boolean }) {
   const a = admin;
