@@ -5,7 +5,7 @@ import { FolderOpen, Plus, Search } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { useMemo } from "react";
 
-import { Page } from "#/features/dashboard/ui";
+import { Page } from "#/features/ui";
 
 import { getProjects, viewStatus, type ViewStatus } from "./mock";
 import { ProjectCard } from "./project-card";
