@@ -28,7 +28,9 @@
     "auth:secret": "vpx auth@latest secret",
     "auth:generate": "vp run --filter=@repo/db auth:generate",
     "skills": "vpx skills@latest",
-    "intent": "vpx @tanstack/intent@latest"
+    "intent": "vpx @tanstack/intent@latest",
+    "seed:users": "curl -X POST http://localhost:3000/api/dev/users-seed",
+    "truncate:users": "curl -X POST http://localhost:3000/api/dev/users-reset"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "catalog:",
