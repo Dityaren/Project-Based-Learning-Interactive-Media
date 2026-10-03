@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { CalendarClock, ClipboardCheck, Flag, User, Users } from "lucide-react";
 import { motion } from "motion/react";
 
-import { ProgressBar } from "#/features/dashboard/ui";
+import { ProgressBar } from "#/features/ui";
 
 import { dueLabel, statusMeta, viewStatus, type Project } from "./mock";
 
