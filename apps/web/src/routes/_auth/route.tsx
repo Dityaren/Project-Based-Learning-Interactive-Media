@@ -32,6 +32,10 @@ export const Route = createFileRoute("/_auth")({
       throw redirect({ to: "/login" });
     }
 
+    if (user.banned) {
+      throw redirect({ to: "/" });
+    }
+
     /**
      * If we need auth data in other loaders/beforeLoad,
      * use `authQueryOptions` with `context.queryClient`,
