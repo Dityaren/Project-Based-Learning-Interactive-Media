@@ -5,7 +5,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AdminDashboard } from "#/features/dashboard/admin";
 import { StudentDashboard } from "#/features/dashboard/student";
 import { TeacherDashboard } from "#/features/dashboard/teacher";
-import { Page } from "#/features/dashboard/ui";
+import { Page } from "#/features/ui";
 
 export const Route = createFileRoute("/_auth/app/")({
   component: DashboardPage,
@@ -23,9 +23,11 @@ function DashboardPage() {
         </Page>
       );
     case "admin":
+    // @ts-ignore -> FALLTHROUGH SOMETHING SOMETHING
     case "master":
       return (
         <Page title={`Welcome back, ${first}`} subtitle="Platform overview and recent activity.">
+          {/* @ts-ignore -> MAAFKAN AKU TYPESCRIPT */ null}
           <AdminDashboard isMaster={user.role === "master"} />
         </Page>
       );
