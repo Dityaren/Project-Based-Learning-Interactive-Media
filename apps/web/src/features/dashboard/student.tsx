@@ -1,8 +1,7 @@
-// apps/web/src/features/dashboard/student.tsx
 import { CalendarClock, CheckCheck, FolderKanban, Trophy } from "lucide-react";
 
+import { Empty, Grid, Panel, Pill, ProgressBar, Row, StatCard } from "../ui";
 import { student } from "./mock";
-import { Empty, Grid, Panel, Pill, ProgressBar, Row, StatCard } from "./ui";
 
 export function StudentDashboard() {
   const s = student;
