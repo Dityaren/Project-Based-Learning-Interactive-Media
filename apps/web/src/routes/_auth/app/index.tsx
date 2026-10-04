@@ -2,10 +2,10 @@
 import { useAuthSuspense } from "@repo/auth/tanstack/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Page } from "#/components/page-kit";
 import { AdminDashboard } from "#/features/dashboard/admin";
 import { StudentDashboard } from "#/features/dashboard/student";
 import { TeacherDashboard } from "#/features/dashboard/teacher";
-import { Page } from "#/features/ui";
 
 export const Route = createFileRoute("/_auth/app/")({
   component: DashboardPage,

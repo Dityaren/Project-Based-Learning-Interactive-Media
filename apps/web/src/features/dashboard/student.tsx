@@ -1,6 +1,7 @@
 import { CalendarClock, CheckCheck, FolderKanban, Trophy } from "lucide-react";
 
-import { Empty, Grid, Panel, Pill, ProgressBar, Row, StatCard } from "../ui";
+import { Empty, Grid, Panel, Pill, ProgressBar, Row, StatCard } from "#/components/page-kit";
+
 import { student } from "./mock";
 
 export function StudentDashboard() {

@@ -1,6 +1,7 @@
 import { AlarmClockOff, ClipboardCheck, FolderKanban, School } from "lucide-react";
 
-import { Grid, Panel, Pill, ProgressBar, Row, StatCard } from "../ui";
+import { Grid, Panel, Pill, ProgressBar, Row, StatCard } from "#/components/page-kit";
+
 import { teacher } from "./mock";
 
 export function TeacherDashboard() {

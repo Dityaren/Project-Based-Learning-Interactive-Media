@@ -5,9 +5,9 @@ import { FolderOpen, Plus, Search } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { useMemo } from "react";
 
-import { Page } from "#/features/ui";
+import { Page } from "#/components/page-kit";
 
-import { getProjects, viewStatus, type ViewStatus } from "./mock";
+import { getProjects, viewStatus, type ViewStatus } from "../mock";
 import { ProjectCard } from "./project-card";
 
 export type Filter = "all" | ViewStatus;
