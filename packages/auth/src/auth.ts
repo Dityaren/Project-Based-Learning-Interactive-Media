@@ -34,14 +34,7 @@ export const auth = betterAuth({
   },
 
   user: {
-    additionalFields: {
-      role: {
-        type: ["student", "teacher", "admin"],
-        required: true,
-        defaultValue: "student",
-        input: false,
-      },
-    },
+    additionalFields: {},
   },
 
   // https://better-auth.com/docs/concepts/oauth
