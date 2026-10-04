@@ -34,7 +34,8 @@
     "nanoid": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "varlock": "catalog:"
+    "varlock": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@playwright/test": "catalog:",
