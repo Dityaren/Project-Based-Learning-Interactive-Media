@@ -1,5 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { setResponseStatus } from "@tanstack/react-start/server";
+export { requirePermission } from "./permissions-middleware";
 
 import { _getUser } from "./functions";
 
