@@ -9,7 +9,8 @@ import {
   UserPlus,
 } from "lucide-react";
 
-import { Grid, Panel, Row, StatCard } from "../ui";
+import { Grid, Panel, Row, StatCard } from "#/components/page-kit";
+
 import { admin } from "./mock";
 
 export function AdminDashboard({ isMaster }: { isMaster: boolean }) {

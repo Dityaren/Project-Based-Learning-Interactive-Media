@@ -2,7 +2,7 @@ import { can } from "@repo/auth/permissions";
 import { authQueryOptions } from "@repo/auth/tanstack/queries";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { ProjectsView, type Filter } from "#/features/projects/projects-view";
+import { ProjectsView, type Filter } from "#/features/projects/components/projects-view";
 
 const FILTERS = ["all", "draft", "active", "overdue", "completed"] as const;
 
