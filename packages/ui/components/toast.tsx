@@ -136,15 +136,17 @@ function ToastIcon({ type }: { type: string | undefined }) {
   let icon: React.ReactNode = null;
 
   if (type === "success") {
-    icon = <CircleCheckIcon aria-hidden="true" />;
+    icon = (
+      <CircleCheckIcon className="text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
+    );
   }
 
   if (type === "info") {
-    icon = <InfoIcon aria-hidden="true" />;
+    icon = <InfoIcon className="text-cyan-700 dark:text-cyan-400" aria-hidden="true" />;
   }
 
   if (type === "warning") {
-    icon = <TriangleAlertIcon aria-hidden="true" />;
+    icon = <TriangleAlertIcon className="text-red-700 dark:text-red-400" aria-hidden="true" />;
   }
 
   if (type === "error") {
