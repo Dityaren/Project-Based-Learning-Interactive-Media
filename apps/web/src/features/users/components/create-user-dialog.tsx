@@ -25,7 +25,10 @@ export function CreateUserDialog({
   assignable: readonly Role[];
   onClose: () => void;
 }) {
-  const m = useUserMutation(createUser, onClose);
+  const m = useUserMutation(createUser, {
+    onDone: onClose,
+    success: (_, v) => `Created account for ${v.email}`,
+  });
   const [form, setForm] = useState({ name: "", email: "", role: "student" as Role, password: "" });
   const [localError, setLocalError] = useState<string | null>(null);
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
