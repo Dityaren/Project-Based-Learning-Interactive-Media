@@ -106,7 +106,7 @@ export function DataTable<T>({
           {empty ?? "No results."}
         </div>
       )}
-      {footer}
+      {!isLoading && !error && footer}
     </div>
   );
 }
