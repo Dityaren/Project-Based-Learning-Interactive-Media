@@ -10,9 +10,9 @@ const endAfterStart = { message: "End date must be after the start date", path: 
 
 export const academicYearSchema = base.refine((v) => v.endDate > v.startDate, endAfterStart);
 export const updateAcademicYearSchema = base
-  .extend({ id: z.string().uuid() })
+  .extend({ id: z.uuid() })
   .refine((v) => v.endDate > v.startDate, endAfterStart);
-export const idSchema = z.object({ id: z.string().uuid() });
+export const idSchema = z.object({ id: z.uuid() });
 
 export type AcademicYearInput = z.infer<typeof academicYearSchema>;
 export type UpdateAcademicYearInput = z.infer<typeof updateAcademicYearSchema>;
