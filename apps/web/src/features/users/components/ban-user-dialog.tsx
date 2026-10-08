@@ -9,7 +9,10 @@ import { useUserMutation } from "../use-user-mutation";
 import { setUserBan } from "../users.functions";
 
 export function BanUserDialog({ row, onClose }: { row: UserRow; onClose: () => void }) {
-  const m = useUserMutation(setUserBan, onClose);
+  const m = useUserMutation(setUserBan, {
+    onDone: onClose,
+    success: (_, v) => (v.banned ? "Account deactivated" : "Account reactivated"),
+  });
   const [reason, setReason] = useState("");
   const banning = !row.banned;
 

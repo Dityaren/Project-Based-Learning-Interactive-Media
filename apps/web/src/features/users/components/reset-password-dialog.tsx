@@ -10,7 +10,10 @@ import { useUserMutation } from "../use-user-mutation";
 import { setUserPassword } from "../users.functions";
 
 export function ResetPasswordDialog({ row, onClose }: { row: UserRow; onClose: () => void }) {
-  const m = useUserMutation(setUserPassword, onClose);
+  const m = useUserMutation(setUserPassword, {
+    onDone: onClose,
+    success: "Password updated",
+  });
   const [password, setPassword] = useState("");
   const [localError, setLocalError] = useState<string | null>(null);
 

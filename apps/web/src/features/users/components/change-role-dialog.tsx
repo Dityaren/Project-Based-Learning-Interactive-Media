@@ -18,7 +18,10 @@ export function ChangeRoleDialog({
   assignable: readonly Role[];
   onClose: () => void;
 }) {
-  const m = useUserMutation(setUserRole, onClose);
+  const m = useUserMutation(setUserRole, {
+    onDone: onClose,
+    success: (_, v) => `Role changed to ${ROLE_LABEL[v.role]}`,
+  });
   const [role, setRole] = useState<Role>((row.role ?? "student") as Role);
 
   return (
