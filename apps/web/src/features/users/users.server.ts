@@ -6,6 +6,8 @@ import { user } from "@repo/db/schema";
 import { getRequestHeaders, setResponseStatus } from "@tanstack/react-start/server";
 import { and, count, desc, eq, ilike, isNull, or } from "drizzle-orm";
 
+import { fail } from "#/lib/http.server";
+
 import { MANAGEABLE, type Role } from "./constants";
 import type {
   CreateUserInput,
@@ -16,11 +18,6 @@ import type {
 } from "./schemas";
 
 type Actor = { id: string; role?: string | null };
-
-function fail(status: number, message: string): never {
-  setResponseStatus(status);
-  throw new Error(message);
-}
 
 const allowedFor = (role?: string | null): readonly Role[] => MANAGEABLE[role ?? ""] ?? [];
 
