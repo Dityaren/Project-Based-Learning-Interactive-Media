@@ -12,11 +12,21 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as GuestRouteRouteImport } from './routes/_guest/route'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as AuthAppRouteRouteImport } from './routes/_auth/app/route'
 import { Route as GuestLoginRouteImport } from './routes/_guest/login'
 import { Route as GuestSignupRouteImport } from './routes/_guest/signup'
 import { Route as AuthAppIndexRouteImport } from './routes/_auth/app/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiDevUsersResetRouteImport } from './routes/api/dev/users-reset'
+import { Route as ApiDevUsersSeedRouteImport } from './routes/api/dev/users-seed'
+import { Route as AuthAppLearnIndexRouteImport } from './routes/_auth/app/learn/index'
+import { Route as AuthAppProfileIndexRouteImport } from './routes/_auth/app/profile/index'
+import { Route as AuthAppProjectsIndexRouteImport } from './routes/_auth/app/projects/index'
+import { Route as AuthAppSettingsIndexRouteImport } from './routes/_auth/app/settings/index'
+import { Route as AuthAppTestIndexRouteImport } from './routes/_auth/app/test/index'
+import { Route as AuthAppAdminAcademicYearsIndexRouteImport } from './routes/_auth/app/admin/academic-years/index'
+import { Route as AuthAppAdminUsersIndexRouteImport } from './routes/_auth/app/admin/users/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +39,11 @@ const AuthRouteRoute = AuthRouteRouteImport.update({
 } as any)
 const GuestRouteRoute = GuestRouteRouteImport.update({
   id: '/_guest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthAppRouteRoute = AuthAppRouteRouteImport.update({
@@ -56,55 +71,175 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDevUsersResetRoute = ApiDevUsersResetRouteImport.update({
+  id: '/api/dev/users-reset',
+  path: '/api/dev/users-reset',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDevUsersSeedRoute = ApiDevUsersSeedRouteImport.update({
+  id: '/api/dev/users-seed',
+  path: '/api/dev/users-seed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthAppLearnIndexRoute = AuthAppLearnIndexRouteImport.update({
+  id: '/learn/',
+  path: '/learn/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppProfileIndexRoute = AuthAppProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppProjectsIndexRoute = AuthAppProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppSettingsIndexRoute = AuthAppSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppTestIndexRoute = AuthAppTestIndexRouteImport.update({
+  id: '/test/',
+  path: '/test/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
+const AuthAppAdminAcademicYearsIndexRoute =
+  AuthAppAdminAcademicYearsIndexRouteImport.update({
+    id: '/admin/academic-years/',
+    path: '/admin/academic-years/',
+    getParentRoute: () => AuthAppRouteRoute,
+  } as any)
+const AuthAppAdminUsersIndexRoute = AuthAppAdminUsersIndexRouteImport.update({
+  id: '/admin/users/',
+  path: '/admin/users/',
+  getParentRoute: () => AuthAppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
   '/app': typeof AuthAppRouteRouteWithChildren
   '/login': typeof GuestLoginRoute
   '/signup': typeof GuestSignupRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/dev/users-reset': typeof ApiDevUsersResetRoute
+  '/api/dev/users-seed': typeof ApiDevUsersSeedRoute
   '/app/': typeof AuthAppIndexRoute
+  '/app/learn/': typeof AuthAppLearnIndexRoute
+  '/app/profile/': typeof AuthAppProfileIndexRoute
+  '/app/projects/': typeof AuthAppProjectsIndexRoute
+  '/app/settings/': typeof AuthAppSettingsIndexRoute
+  '/app/test/': typeof AuthAppTestIndexRoute
+  '/app/admin/academic-years/': typeof AuthAppAdminAcademicYearsIndexRoute
+  '/app/admin/users/': typeof AuthAppAdminUsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
   '/login': typeof GuestLoginRoute
   '/signup': typeof GuestSignupRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/dev/users-reset': typeof ApiDevUsersResetRoute
+  '/api/dev/users-seed': typeof ApiDevUsersSeedRoute
   '/app': typeof AuthAppIndexRoute
+  '/app/learn': typeof AuthAppLearnIndexRoute
+  '/app/profile': typeof AuthAppProfileIndexRoute
+  '/app/projects': typeof AuthAppProjectsIndexRoute
+  '/app/settings': typeof AuthAppSettingsIndexRoute
+  '/app/test': typeof AuthAppTestIndexRoute
+  '/app/admin/academic-years': typeof AuthAppAdminAcademicYearsIndexRoute
+  '/app/admin/users': typeof AuthAppAdminUsersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_guest': typeof GuestRouteRouteWithChildren
+  '/docs': typeof DocsRoute
   '/_auth/app': typeof AuthAppRouteRouteWithChildren
   '/_guest/login': typeof GuestLoginRoute
   '/_guest/signup': typeof GuestSignupRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/dev/users-reset': typeof ApiDevUsersResetRoute
+  '/api/dev/users-seed': typeof ApiDevUsersSeedRoute
   '/_auth/app/': typeof AuthAppIndexRoute
+  '/_auth/app/learn/': typeof AuthAppLearnIndexRoute
+  '/_auth/app/profile/': typeof AuthAppProfileIndexRoute
+  '/_auth/app/projects/': typeof AuthAppProjectsIndexRoute
+  '/_auth/app/settings/': typeof AuthAppSettingsIndexRoute
+  '/_auth/app/test/': typeof AuthAppTestIndexRoute
+  '/_auth/app/admin/academic-years/': typeof AuthAppAdminAcademicYearsIndexRoute
+  '/_auth/app/admin/users/': typeof AuthAppAdminUsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/login' | '/signup' | '/api/auth/$' | '/app/'
+  fullPaths:
+    | '/'
+    | '/docs'
+    | '/app'
+    | '/login'
+    | '/signup'
+    | '/api/auth/$'
+    | '/api/dev/users-reset'
+    | '/api/dev/users-seed'
+    | '/app/'
+    | '/app/learn/'
+    | '/app/profile/'
+    | '/app/projects/'
+    | '/app/settings/'
+    | '/app/test/'
+    | '/app/admin/academic-years/'
+    | '/app/admin/users/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/api/auth/$' | '/app'
+  to:
+    | '/'
+    | '/docs'
+    | '/login'
+    | '/signup'
+    | '/api/auth/$'
+    | '/api/dev/users-reset'
+    | '/api/dev/users-seed'
+    | '/app'
+    | '/app/learn'
+    | '/app/profile'
+    | '/app/projects'
+    | '/app/settings'
+    | '/app/test'
+    | '/app/admin/academic-years'
+    | '/app/admin/users'
   id:
     | '__root__'
     | '/'
     | '/_auth'
     | '/_guest'
+    | '/docs'
     | '/_auth/app'
     | '/_guest/login'
     | '/_guest/signup'
     | '/api/auth/$'
+    | '/api/dev/users-reset'
+    | '/api/dev/users-seed'
     | '/_auth/app/'
+    | '/_auth/app/learn/'
+    | '/_auth/app/profile/'
+    | '/_auth/app/projects/'
+    | '/_auth/app/settings/'
+    | '/_auth/app/test/'
+    | '/_auth/app/admin/academic-years/'
+    | '/_auth/app/admin/users/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   GuestRouteRoute: typeof GuestRouteRouteWithChildren
+  DocsRoute: typeof DocsRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiDevUsersResetRoute: typeof ApiDevUsersResetRoute
+  ApiDevUsersSeedRoute: typeof ApiDevUsersSeedRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -128,6 +263,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof GuestRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/app': {
@@ -165,15 +307,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/dev/users-reset': {
+      id: '/api/dev/users-reset'
+      path: '/api/dev/users-reset'
+      fullPath: '/api/dev/users-reset'
+      preLoaderRoute: typeof ApiDevUsersResetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/dev/users-seed': {
+      id: '/api/dev/users-seed'
+      path: '/api/dev/users-seed'
+      fullPath: '/api/dev/users-seed'
+      preLoaderRoute: typeof ApiDevUsersSeedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/app/learn/': {
+      id: '/_auth/app/learn/'
+      path: '/learn'
+      fullPath: '/app/learn/'
+      preLoaderRoute: typeof AuthAppLearnIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/profile/': {
+      id: '/_auth/app/profile/'
+      path: '/profile'
+      fullPath: '/app/profile/'
+      preLoaderRoute: typeof AuthAppProfileIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/projects/': {
+      id: '/_auth/app/projects/'
+      path: '/projects'
+      fullPath: '/app/projects/'
+      preLoaderRoute: typeof AuthAppProjectsIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/settings/': {
+      id: '/_auth/app/settings/'
+      path: '/settings'
+      fullPath: '/app/settings/'
+      preLoaderRoute: typeof AuthAppSettingsIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/test/': {
+      id: '/_auth/app/test/'
+      path: '/test'
+      fullPath: '/app/test/'
+      preLoaderRoute: typeof AuthAppTestIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/admin/academic-years/': {
+      id: '/_auth/app/admin/academic-years/'
+      path: '/admin/academic-years'
+      fullPath: '/app/admin/academic-years/'
+      preLoaderRoute: typeof AuthAppAdminAcademicYearsIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
+    '/_auth/app/admin/users/': {
+      id: '/_auth/app/admin/users/'
+      path: '/admin/users'
+      fullPath: '/app/admin/users/'
+      preLoaderRoute: typeof AuthAppAdminUsersIndexRouteImport
+      parentRoute: typeof AuthAppRouteRoute
+    }
   }
 }
 
 interface AuthAppRouteRouteChildren {
   AuthAppIndexRoute: typeof AuthAppIndexRoute
+  AuthAppLearnIndexRoute: typeof AuthAppLearnIndexRoute
+  AuthAppProfileIndexRoute: typeof AuthAppProfileIndexRoute
+  AuthAppProjectsIndexRoute: typeof AuthAppProjectsIndexRoute
+  AuthAppSettingsIndexRoute: typeof AuthAppSettingsIndexRoute
+  AuthAppTestIndexRoute: typeof AuthAppTestIndexRoute
+  AuthAppAdminAcademicYearsIndexRoute: typeof AuthAppAdminAcademicYearsIndexRoute
+  AuthAppAdminUsersIndexRoute: typeof AuthAppAdminUsersIndexRoute
 }
 
 const AuthAppRouteRouteChildren: AuthAppRouteRouteChildren = {
   AuthAppIndexRoute: AuthAppIndexRoute,
+  AuthAppLearnIndexRoute: AuthAppLearnIndexRoute,
+  AuthAppProfileIndexRoute: AuthAppProfileIndexRoute,
+  AuthAppProjectsIndexRoute: AuthAppProjectsIndexRoute,
+  AuthAppSettingsIndexRoute: AuthAppSettingsIndexRoute,
+  AuthAppTestIndexRoute: AuthAppTestIndexRoute,
+  AuthAppAdminAcademicYearsIndexRoute: AuthAppAdminAcademicYearsIndexRoute,
+  AuthAppAdminUsersIndexRoute: AuthAppAdminUsersIndexRoute,
 }
 
 const AuthAppRouteRouteWithChildren = AuthAppRouteRoute._addFileChildren(
@@ -210,7 +429,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   GuestRouteRoute: GuestRouteRouteWithChildren,
+  DocsRoute: DocsRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiDevUsersResetRoute: ApiDevUsersResetRoute,
+  ApiDevUsersSeedRoute: ApiDevUsersSeedRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
