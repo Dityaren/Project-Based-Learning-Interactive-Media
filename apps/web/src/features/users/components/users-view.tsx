@@ -1,4 +1,3 @@
-// features/users/components/users-view.tsx
 import { can } from "@repo/auth/permissions";
 import { useAuthSuspense } from "@repo/auth/tanstack/hooks";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
