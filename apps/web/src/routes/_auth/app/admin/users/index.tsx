@@ -15,7 +15,6 @@ export const Route = createFileRoute("/_auth/app/admin/users/")({
   }),
   beforeLoad: async ({ context }) => {
     const user = await context.queryClient.query({ ...authQueryOptions(), staleTime: "static" });
-    void context.queryClient.query(authQueryOptions());
 
     if (!user) throw redirect({ to: "/login" });
     if (!can(user.role, { user: ["list"] })) throw redirect({ to: "/app" });
