@@ -12,3 +12,6 @@ export const MANAGEABLE: Record<string, readonly Role[]> = {
   master: ROLES,
   admin: ["student", "teacher"],
 };
+
+export const roleOptions = (roles: readonly Role[]) =>
+  roles.map((r) => ({ value: r, label: ROLE_LABEL[r] }));
