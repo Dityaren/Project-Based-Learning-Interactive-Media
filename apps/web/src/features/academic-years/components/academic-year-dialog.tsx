@@ -1,14 +1,24 @@
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
-import { useState } from "react";
+import { useForm } from "@tanstack/react-form";
+import type { z } from "zod";
 
 import { FormDialog } from "#/components/form-dialog";
-import { FormField } from "#/components/form-field";
 import { useAppMutation } from "#/lib/use-app-mutation";
 
 import { createAcademicYear, updateAcademicYear } from "../academic-years.functions";
 import { academicYearSchema } from "../schemas";
 import { ACADEMIC_YEARS_KEY, type AcademicYearRow } from "../types";
 
+const FORM_ID = "academic-year-form";
+
+/** Create when `row` is omitted, edit otherwise. */
 export function AcademicYearDialog({
   row,
   onClose,
@@ -17,14 +27,6 @@ export function AcademicYearDialog({
   onClose: () => void;
 }) {
   const editing = !!row;
-  const [form, setForm] = useState({
-    name: row?.name ?? "",
-    startDate: row?.startDate ?? "",
-    endDate: row?.endDate ?? "",
-  });
-  const [localError, setLocalError] = useState<string | null>(null);
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const create = useAppMutation(createAcademicYear, {
     invalidate: ACADEMIC_YEARS_KEY,
@@ -38,34 +40,109 @@ export function AcademicYearDialog({
   });
   const m = editing ? update : create;
 
-  const submit = () => {
-    const parsed = academicYearSchema.safeParse(form);
-    if (!parsed.success) return setLocalError(parsed.error.issues[0]?.message ?? "Invalid input");
-    setLocalError(null);
-    if (row) update.mutate({ id: row.id, ...parsed.data });
-    else create.mutate(parsed.data);
-  };
+  const form = useForm({
+    defaultValues: {
+      name: row?.name ?? "",
+      startDate: row?.startDate ?? "",
+      endDate: row?.endDate ?? "",
+    } as z.input<typeof academicYearSchema>,
+    validators: {
+      onSubmit: academicYearSchema,
+    },
+    onSubmit: ({ value }) => {
+      const data = academicYearSchema.parse(value);
+      if (row) update.mutate({ id: row.id, ...data });
+      else create.mutate(data);
+    },
+  });
 
   return (
     <FormDialog
       title={editing ? "Edit academic year" : "Add academic year"}
+      formId={FORM_ID}
       submitLabel={editing ? "Save changes" : "Create year"}
       pending={m.isPending}
-      error={localError ?? m.error?.message}
-      onSubmit={submit}
+      error={m.error?.message}
       onClose={onClose}
     >
-      <FormField label="Name" htmlFor="name" hint="For example 2026/2027">
-        <Input id="name" value={form.name} onChange={set("name")} autoFocus />
-      </FormField>
-      <div className="grid grid-cols-2 gap-3">
-        <FormField label="Start date" htmlFor="start">
-          <Input id="start" type="date" value={form.startDate} onChange={set("startDate")} />
-        </FormField>
-        <FormField label="End date" htmlFor="end">
-          <Input id="end" type="date" value={form.endDate} onChange={set("endDate")} />
-        </FormField>
-      </div>
+      <form
+        id={FORM_ID}
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault();
+          form.handleSubmit();
+        }}
+      >
+        <FieldGroup>
+          <form.Field
+            name="name"
+            children={(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+                  <Input
+                    id={field.name}
+                    type="text"
+                    placeholder="2026/2027"
+                    autoComplete="off"
+                    value={field.state.value}
+                    onChange={(event) => field.handleChange(event.target.value)}
+                    onBlur={field.handleBlur}
+                    aria-invalid={isInvalid}
+                  />
+                  <FieldDescription>Must be unique, for example 2026/2027.</FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          />
+
+          <div className="grid grid-cols-2 gap-3">
+            <form.Field
+              name="startDate"
+              children={(field) => {
+                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Start date</FieldLabel>
+                    <Input
+                      id={field.name}
+                      type="date"
+                      value={field.state.value}
+                      onChange={(event) => field.handleChange(event.target.value)}
+                      onBlur={field.handleBlur}
+                      aria-invalid={isInvalid}
+                    />
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  </Field>
+                );
+              }}
+            />
+
+            <form.Field
+              name="endDate"
+              children={(field) => {
+                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>End date</FieldLabel>
+                    <Input
+                      id={field.name}
+                      type="date"
+                      value={field.state.value}
+                      onChange={(event) => field.handleChange(event.target.value)}
+                      onBlur={field.handleBlur}
+                      aria-invalid={isInvalid}
+                    />
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  </Field>
+                );
+              }}
+            />
+          </div>
+        </FieldGroup>
+      </form>
     </FormDialog>
   );
 }
