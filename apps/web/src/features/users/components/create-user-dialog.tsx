@@ -1,15 +1,31 @@
 import { Button } from "@repo/ui/components/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
-import { useState } from "react";
+import { PasswordInput } from "@repo/ui/components/password-input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@repo/ui/components/select";
+import { useForm } from "@tanstack/react-form";
+import type { z } from "zod";
 
 import { FormDialog } from "#/components/form-dialog";
-import { FormField } from "#/components/form-field";
-import { SelectField } from "#/components/select-field";
 
-import { ROLE_LABEL, type Role } from "../constants";
+import { roleOptions, type Role } from "../constants";
 import { createUserSchema } from "../schemas";
 import { useUserMutation } from "../use-user-mutation";
 import { createUser } from "../users.functions";
+
+const FORM_ID = "create-user-form";
 
 const generatePassword = () => {
   const bytes = crypto.getRandomValues(new Uint8Array(12));
@@ -25,77 +41,157 @@ export function CreateUserDialog({
   assignable: readonly Role[];
   onClose: () => void;
 }) {
+  const options = roleOptions(assignable);
+
   const m = useUserMutation(createUser, {
     onDone: onClose,
     success: (_, v) => `Created account for ${v.email}`,
   });
-  const [form, setForm] = useState({ name: "", email: "", role: "student" as Role, password: "" });
-  const [localError, setLocalError] = useState<string | null>(null);
-  const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
-    setForm((f) => ({ ...f, [k]: v }));
 
-  const submit = () => {
-    const parsed = createUserSchema.safeParse(form);
-    if (!parsed.success) return setLocalError(parsed.error.issues[0]?.message ?? "Invalid input");
-    setLocalError(null);
-    m.mutate(parsed.data);
-  };
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      role: "student",
+      password: "",
+    } as z.input<typeof createUserSchema>,
+    validators: {
+      onSubmit: createUserSchema,
+    },
+    onSubmit: ({ value }) => m.mutate(createUserSchema.parse(value)),
+  });
 
   return (
     <FormDialog
       title="Add user"
       description="Create an account and share the temporary password securely."
+      formId={FORM_ID}
       submitLabel="Create user"
       pending={m.isPending}
-      error={localError ?? m.error?.message}
-      onSubmit={submit}
+      error={m.error?.message}
       onClose={onClose}
     >
-      <FormField label="Full name" htmlFor="name">
-        <Input
-          id="name"
-          value={form.name}
-          onChange={(e) => set("name", e.target.value)}
-          autoFocus
-        />
-      </FormField>
-      <FormField label="Email" htmlFor="email">
-        <Input
-          id="email"
-          type="email"
-          value={form.email}
-          onChange={(e) => set("email", e.target.value)}
-        />
-      </FormField>
-      <FormField label="Role" htmlFor="role">
-        <SelectField
-          id="role"
-          value={form.role}
-          onChange={(v) => set("role", v as Role)}
-          options={assignable.map((r) => ({ value: r, label: ROLE_LABEL[r] }))}
-        />
-      </FormField>
-      <FormField
-        label="Temporary password"
-        htmlFor="password"
-        hint="Only shown here. Share it securely."
+      <form
+        id={FORM_ID}
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault();
+          form.handleSubmit();
+        }}
       >
-        <div className="flex gap-2">
-          <Input
-            id="password"
-            value={form.password}
-            onChange={(e) => set("password", e.target.value)}
-            className="font-mono"
+        <FieldGroup>
+          <form.Field
+            name="name"
+            children={(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Full name</FieldLabel>
+                  <Input
+                    id={field.name}
+                    type="text"
+                    placeholder="Jane Doe"
+                    autoComplete="off"
+                    value={field.state.value}
+                    onChange={(event) => field.handleChange(event.target.value)}
+                    onBlur={field.handleBlur}
+                    aria-invalid={isInvalid}
+                  />
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
           />
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => set("password", generatePassword())}
-          >
-            Generate
-          </Button>
-        </div>
-      </FormField>
+
+          <form.Field
+            name="email"
+            children={(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                  <Input
+                    id={field.name}
+                    type="email"
+                    placeholder="name@school.id"
+                    autoComplete="off"
+                    value={field.state.value}
+                    onChange={(event) => field.handleChange(event.target.value)}
+                    onBlur={field.handleBlur}
+                    aria-invalid={isInvalid}
+                  />
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          />
+
+          <form.Field
+            name="role"
+            children={(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                  <Select
+                    items={options}
+                    value={field.state.value}
+                    onValueChange={(value) => value && field.handleChange(value as Role)}
+                  >
+                    <SelectTrigger id={field.name} aria-invalid={isInvalid} className="w-full">
+                      <SelectValue placeholder="Select a role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {options.map((o) => (
+                        <SelectItem key={o.value} value={o.value}>
+                          {o.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          />
+
+          <form.Field
+            name="password"
+            children={(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>Temporary password</FieldLabel>
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <PasswordInput
+                        id={field.name}
+                        placeholder="********"
+                        autoComplete="new-password"
+                        value={field.state.value}
+                        onChange={(event) => field.handleChange(event.target.value)}
+                        onBlur={field.handleBlur}
+                        aria-invalid={isInvalid}
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => field.handleChange(generatePassword())}
+                    >
+                      Generate
+                    </Button>
+                  </div>
+                  <FieldDescription>
+                    Use the eye icon to reveal it before sharing. It isn't shown again.
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          />
+        </FieldGroup>
+      </form>
     </FormDialog>
   );
 }
